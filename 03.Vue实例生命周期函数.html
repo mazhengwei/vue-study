@@ -1,66 +1,71 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>分析生命周期</title>
-  <script src="./vue.js"></script>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>生命周期函数</title>
+    <script src="./vue.js"></script>
 </head>
 <body>
-<!-- 准备好一个容器 -->
-<div id="root" :x="n">
-  <h2 v-text="n"></h2>
-  <h2>当前的n值为： {{n}}</h2>
-  <button @click="add">点我给n+1</button>
-  <button @click="bye">点我销毁</button>
+<div id="app">
+    <h2>{{msg}}</h2>
+    <button @click="onClick">计时器{{msg}}</button>
+    <button @click="destroy">点我销毁</button>
 </div>
-
-<script type="text/javascript">
-  Vue.config.productionTip = false; // 禁用提示
-  new Vue({
-    el: '#root',
-    // template:` // 一般不用这种
-    // <div>
-    //     <h2>当前的n值为： {{n}}</h2>
-    //     <button @click="add">点我给n+1</button>
-    // </div>`,
-    data: {
-      n:1,
-    },
-    methods: {
-      add(){
-        this.n++
-      },
-      bye(){
-        console.log('bye');
-        this.$destroy();
-      }
-    },
-    watch:{
-      n(){
-        console.log('n 变了');
-      }
-    },
-    beforeCreate() {
-      console.log('beforeCreate');
-    },
-    created() {
-      console.log('created');
-    },
-    beforeUpdate() {
-      console.log('beforeUpdate');
-    },
-    updated() {
-      console.log('updated');
-    },
-    beforeDestroy() {
-      console.log('beforeDestroy');
-    },
-    destroyed() {
-      console.log('destroyed');
-    },
-  });
+<script>
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            msg: 0,
+        },
+        methods: {
+            onClick: function () {
+                this.msg++
+            },
+            destroy: function () {
+                this.$destroy()
+            },
+            hello: function ()  {
+                this.msg++
+                return this.msg
+            }
+        },
+        beforeCreate() {
+            console.log('-----beforeCreate-----')
+            console.log('el ' + this.$el)   //el undefined
+            console.log('msg ' + this.msg)  //msg undefined
+        },
+        created() {
+            console.log('-----created-----')
+            console.log('el ' + this.$el)  //el undefined
+            console.log('old msg = ' + this.msg)  //old msg = 0
+            console.log('调用methods, new msg = ' + this.hello())  //调用methods, new msg = 1
+        },
+        beforeMount() {
+            console.log('-----beforeMount-----')
+            console.log(this.$el)
+        },
+        mounted(){
+            console.log('-----Mounted-----')
+            console.log(this.$el)
+        },
+        beforeUpdate() {
+            console.log('-----beforeUpdate-----')
+            console.log('el ' + this.$el)
+        },
+        updated() {
+            console.log('-----updated-----')
+            console.log('el ' + this.$el)
+        },
+        beforeDestroy() {
+            console.log('-----beforeDestroy-----')
+            console.log(this.$el)
+            console.log(this.msg)
+        },
+        destroyed() {
+            console.log('-----destroyed-----')
+            console.log('el ' + this.$el)
+            console.log('msg ' + this.msg)
+        },
+    })
 </script>
 </body>
 </html>

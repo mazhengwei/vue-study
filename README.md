@@ -1,2 +1,2 @@
 # vue-study
-vue学习源码笔记
+vue框架学习笔记
