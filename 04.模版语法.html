@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>模版语法</title>
+	<script src="./vue.js"></script>
+</head>
+<body>
+<div id="app">
+	<h1>插值语法</h1>
+	<!-- 使用插值表达式{{}} -->
+	<h3>您好：{{name}}</h3>
+	<h1>指令语法</h1>
+	<!-- 文本插值，可用v-text 代替 {{}} -->
+	<h3 v-text="name"></h3>
+	<!-- 数据存在标签时，可用 v-html, 但会被 xss 攻击，慎用 -->
+	<h3 v-html="message"></h3>
+	<a v-bind:href="url">慕言的博客地址</a>
+	<!-- v-bind 可简写成冒号 : -->
+	<a :href="url">慕言的博客地址</a>
+</div>
+<script>
+	vm = new Vue({
+		el: '#app',
+		data: {
+			name: '慕言',
+			url: 'https://mazhengwei.cn',
+			message: '<div>慕言blog</div>'
+		}
+	})
+</script>
+</body>
+</html>

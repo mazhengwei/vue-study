@@ -49,11 +49,11 @@
         },
         beforeUpdate() {
             console.log('-----beforeUpdate-----')
-            console.log('el ' + this.$el)
+            console.log(this.$el)
         },
         updated() {
             console.log('-----updated-----')
-            console.log('el ' + this.$el)
+            console.log( this.$el)
         },
         beforeDestroy() {
             console.log('-----beforeDestroy-----')
@@ -62,7 +62,7 @@
         },
         destroyed() {
             console.log('-----destroyed-----')
-            console.log('el ' + this.$el)
+            console.log(this.$el)
             console.log('msg ' + this.msg)
         },
     })
