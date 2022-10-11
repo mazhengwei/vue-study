@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>计算属性set</title>
+	<script src="./vue.js"></script>
+</head>
+<body>
+	<div id="app">{{fullName}}</div>
+	<script>
+		vm = new Vue({
+			el: '#app',
+			data: {
+				firstName: 'Dell',
+				lastName: 'Lee',
+			},
+			computed: {
+				fullName: {
+					// getter
+					get: function () {
+						console.log('get')
+						return this.firstName + ' ' + this.lastName
+					},
+					// setter
+					set: function(value) {
+						console.log('set')
+					    var names = value.split(' ')
+						this.firstName = names[0]
+						this.lastName = names[names.length - 1]
+					}
+				}
+			}
+		})
+	</script>
+</body>
+</html>
