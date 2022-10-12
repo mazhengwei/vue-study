@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Vue中的样式绑定</title>
+	<script src="./vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<div @click="handleDivClick"
+		:style="styleObj"
+		>
+			Hello World
+		</div>
+	</div>
+	<script>
+		vm = new Vue({
+			el: '#app',
+			data: {
+				styleObj: {
+					color: 'black'
+				}
+			},
+			methods: {
+				handleDivClick: function () {
+					this.styleObj.color = this.styleObj.color === 'black' ? 'red': 'black'
+				}
+			}
+		})
+	</script>
+</body>
+</html>
