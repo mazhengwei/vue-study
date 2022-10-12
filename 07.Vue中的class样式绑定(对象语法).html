@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Vue中的样式绑定</title>
+	<title>Vue中的class样式绑定(对象语法)</title>
 	<script src="./vue.js"></script>
 	<style>
 		.activated {
@@ -11,25 +11,26 @@
 	</style>
 </head>
 <body>
-	<div id="app">
-		<div @click="handleDivClick"
-		:class="{activated: isActivated}"
-		>
-			Hello World
-		</div>
+<div id="app">
+	<!-- activated这个class存在与否取决于 isActivated 的真实性 -->
+	<div @click="handleDivClick"
+	     :class="{activated: isActivated}"
+	>
+		Hello World
 	</div>
-	<script>
-		vm = new Vue({
-			el: '#app',
-			data: {
-				isActivated: false,
-			},
-			methods: {
-				handleDivClick: function () {
-					this.isActivated = !this.isActivated
-				}
+</div>
+<script>
+	vm = new Vue({
+		el: '#app',
+		data: {
+			isActivated: false,
+		},
+		methods: {
+			handleDivClick: function () {
+				this.isActivated = !this.isActivated
 			}
-		})
-	</script>
+		}
+	})
+</script>
 </body>
 </html>
