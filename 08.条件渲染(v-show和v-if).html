@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue中的条件渲染</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div v-if="show">{{message}}</div>
+        <div v-show="show">{{message}}</div>
+    </div>
+    <script>
+        vm = new Vue({
+            el: '#app',
+            data: {
+                show: false,
+                message: "欢迎来到慕言的博客"
+            }
+        })
+    </script>
+</body>
+</html>
