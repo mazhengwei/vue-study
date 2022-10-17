@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Vue中的列表渲染</title>
+	<script src="./vue.js"></script>
+</head>
+<body>
+<div id="app">
+	<!-- 为了尽量提升性能，通常会加个key，而且key要唯一值，同时尽量不用index作为key值-->
+	<template v-for="(item, index) of list"
+	          :key="index">
+		<div>
+			{{item.text}} --- {{index}}
+		</div>
+		<span>
+            {{item.text}}
+         </span>
+	</template>
+
+</div>
+<script>
+	vm = new Vue({
+		el: '#app',
+		data: {
+			list: [{
+				id: "01",
+				text: "hello"
+			},{
+				id: "02",
+				text: "mu"
+			},{
+				id: "03",
+				text: "yan"
+			}]
+		}
+	})
+</script>
+</body>
+</html>
