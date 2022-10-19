@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>组件使用中的细节点</title>
+	<script src="./vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<counter ref="one" @change="handleChange"></counter>
+		<counter ref="two" @change="handleChange"></counter>
+		<div>{{total}}</div>
+		<div ref='hello' @click="handleClick">hello muyan</div>
+		<!-- 细节点一 -->
+		<!-- 由于html5的固定语法，tbody后面必须跟tr，否则html在渲染DOM的时候会出错 -->
+		<!-- 通过 is属性实现看着是 tr 但实际上是 row 组件，这样既保证h5的编码规范又保证tr里显示我们的组件 -->
+		<table>
+			<tbody>
+				<!-- 会出现在外部 注data只是为了下面说明做区分方便-->
+				<tr data="notis"></tr>
+				<!-- 正常 -->
+				<tr is="row"></tr>
+				<tr is="row"></tr>
+				<tr is="row"></tr>
+			</tbody>
+		</table>
+	</div>
+	<script>
+		Vue.component('counter',{
+			template: '<div @click="handleClickCount">{{number}}</div>',
+			// 细节点二
+			// 子组件中data必须为函数，同时要求返回一个对象
+			// 作用：避免在多地多次调用子组件的时候，产生数据冲突(原因：数据存储地址一致)，这样做每个子组件都拥有独立的数据存储
+			data: function () {
+				return {
+					number: 0
+				}
+			},
+			methods: {
+				handleClickCount: function () {
+					this.number++
+					this.$emit('change',this.number)
+				}
+			}
+		})
+		Vue.component(
+			'row',{
+			// 子组件中data必须为函数，同时要求返回一个对象
+			// 作用：避免在多地多次调用子组件的时候，产生数据冲突(原因：数据存储地址一致)，这样做每个子组件都拥有独立的数据存储
+				data: function () {
+					return {
+						content: 'this is a row'
+					}
+				},
+				template: '<tr><td>{{content}}</td></tr>'
+			})
+		vm = new Vue({
+			el: '#app',
+			data: {
+				total: 0
+			},
+			methods: {
+				// 细节点三
+				handleClick: function () {
+					// 当写在标签上时，通过 $ref 获取到的是标签对应的DOM元素
+					console.log(this.$refs.hello.innerHTML)
+					alert(this.$refs.hello.innerHTML)
+				},
+				handleChange: function () {
+					// 当写在组件上时，通过 $ref 获取到的是子组件counter的一个引用
+					console.log(this.$refs.one)
+					console.log(this.$refs.two)
+					this.total = this.$refs.one.number + this.$refs.two.number
+				}
+			}
+		})
+	</script>
+</body>
+</html>
