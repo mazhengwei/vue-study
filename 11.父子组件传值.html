@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>父子组件传值</title>
+  <script src="./vue.js"></script>
+</head>
+<body>
+    <!-- 父组件通过属性向子组件传值 -->
+    <!-- 加冒号(:)传值后的区别，不加，双引号里面的值是字符串，加了之后变成js表达式，如下变成了数字 -->
+    <div id="app">
+      <counter :count="3" @inc="handleIncrease"></counter>
+      <counter :count="2" @inc="handleIncrease"></counter>
+      <div> {{total}}</div>
+    </div>
+    <script>
+      var counter = {
+        <!-- props 子组件从父组件接收 count 内容-->
+        props: ['count'],
+        // 如果要修改 count 值，但不能修改父组件的count值该怎么办？
+        // 子组件内定义一个data，让它返回这个 count 值，这样单独开辟了数据存储空间
+        data: function () {
+          return {
+            number: this.count
+          }
+        },
+        template: '<div @click="handleClick">{{number}}</div>',
+        methods: {
+          handleClick: function () {
+            // 不要直接修改父组件的 count 值，只能通过父组件传入的 count 值进行操作
+            // this.count ++
+            this.number = this.number + 2
+            // 子组件向父组件传值通过事件的形式$emit
+            this.$emit('inc', 2)
+          }
+        }
+      }
+      vm = new Vue({
+        el: '#app',
+        data: {
+          total: 5
+        },
+        components: {
+          counter: counter
+        },
+        methods: {
+          handleIncrease: function (step) {
+              this.total += step
+          }
+        }
+      })
+    </script>
+</body>
+</html>
