@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>数组参数校验与非props特性</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <child content="hello muyan"></child>
+<!--        <child :content="123"></child>-->
+<!--        <child :content="{name: 'hello muyan'}"></child>-->
+    </div>
+    <script>
+        Vue.component('child', {
+            // props: ['content'],
+            props: {
+                content: {
+                    // type: [Number,String],
+                    // required: true,
+                    // default: 'hello',
+                    validator: function(value) {
+                        return (value.length > 5)
+                    }
+                }
+            },
+            template: '<div>{{content}}</div>'
+        })
+        vm = new Vue({
+            el: "#app",
+        })
+    </script>
+</body>
+</html>
+
+//props 特性
+// 父组件通过属性向子组件传值时，子组件申明了对该属性的接收
+// 该属性标签不会在DOM里显示
+// 子组件内可以通过插值表达式或者this.属性标签，取得该属性的内容
+
+
+// 非props特性
+// 父组件通过属性向子组件传值时，子组件未申明对该属性的接收
+// 该属性会展示在子组件最外层DOM标签的HTML属性里
+// 子组件内不能获取父组件传递的属性内容
