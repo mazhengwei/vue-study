@@ -8,17 +8,21 @@
 <body>
     <div id="app">
         <child content="hello muyan"></child>
-<!--        <child :content="123"></child>-->
-<!--        <child :content="{name: 'hello muyan'}"></child>-->
+        <!-- 报错：满足数据类型是Number，但自定义校验失败 -->
+        <child :content="12345"></child>
+        <!-- 报错：不满足数据类型校验-->
+        <child :content="{name: 'hello muyan'}"></child>
+        <!-- 报错： required为true必须传值，显示默认值-->
+        <child></child>
     </div>
     <script>
         Vue.component('child', {
             // props: ['content'],
             props: {
                 content: {
-                    // type: [Number,String],
-                    // required: true,
-                    // default: 'hello',
+                    type: [Number,String],
+                    required: true,
+                    default: 'default value',
                     validator: function(value) {
                         return (value.length > 5)
                     }
@@ -32,14 +36,3 @@
     </script>
 </body>
 </html>
-
-//props 特性
-// 父组件通过属性向子组件传值时，子组件申明了对该属性的接收
-// 该属性标签不会在DOM里显示
-// 子组件内可以通过插值表达式或者this.属性标签，取得该属性的内容
-
-
-// 非props特性
-// 父组件通过属性向子组件传值时，子组件未申明对该属性的接收
-// 该属性会展示在子组件最外层DOM标签的HTML属性里
-// 子组件内不能获取父组件传递的属性内容
