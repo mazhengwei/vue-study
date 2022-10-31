@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>非父子组件间传值(Bus/总线/发布订阅模式/观察者模式)</title>
+  <script src="./vue.js"></script>
+</head>
+<body>
+    <div id="app">
+      <child content="ma"></child>
+      <child content="muyan"></child>
+      <child-two content="mamuyan"></child-two>
+    </div>
+    <script>
+        // 给Vue的原型上挂载一个Vue实例
+      Vue.prototype.bus = new Vue()
+
+      Vue.component('child', {
+        data: function () {
+          return {
+            selfContent: this.content
+          }
+        },
+        props: {
+          content: String
+        },
+        template: '<div @click="handleClick">{{selfContent}}</div>',
+        methods: {
+            handleClick: function () {
+                // 发送事件，发送数据
+                this.bus.$emit('change1', this.selfContent)
+            }
+        },
+          mounted: function () {
+            // 监听事件，获取数据
+            this.bus.$on('change2', (msg) => {
+                this.selfContent = msg
+            })
+          },
+          beforeDestroy() {
+            // 清理事件监听
+            this.bus.$off('change2')
+          }
+      })
+      Vue.component('child-two', {
+          data: function () {
+              return {
+                  selfContent: this.content
+              }
+          },
+          props: {
+              content: String
+          },
+          template: '<div @click="handleClick">{{selfContent}}</div>',
+          methods: {
+              handleClick: function () {
+                  // 发送事件，发送数据
+                  this.bus.$emit('change2', this.selfContent)
+              }
+          },
+          mounted: function () {
+              // 监听事件，获取数据
+              this.bus.$on('change1', (msg) => {
+                  this.selfContent = msg
+              })
+          },
+          beforeDestroy() {
+              // 清理事件监听
+              this.bus.$off('change1')
+          }
+      })
+      vm = new Vue({
+        el: "#app"
+      })
+    </script>
+</body>
+</html>
