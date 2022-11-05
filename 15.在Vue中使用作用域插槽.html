@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Vue中的插槽(slot)</title>
+	<script src="./vue.js"></script>
+</head>
+<body>
+<div id="app">
+	<child>
+		<!-- 父组件内，多个插槽必须要写template标签上 -->
+		<!-- props 指接收子组件传递的数据item，props为自定义名称-->
+		<!-- 绑定插槽的语法是 v-slot:todo1="props" 或 #todo1="props" -->
+		<template #todo1="props">
+			<li>{{props.item}}</li>
+		</template>
+		<!-- 2.6.0 版本之后slot-scope被移除，可不使用-->
+		<template slot="todo2" slot-scope="props">
+			<li>{{props.item}}</li>
+		</template>
+	</child>
+	<child #todo1="props">
+		<li>{{props.item}}</li>
+	</child>
+</div>
+<script>
+    Vue.component('child', {
+        data: function () {
+            return {
+                list: [1,2,3,4]
+            }
+        },
+        template: `<div>
+							<ul>
+							  <!-- 插槽位置 -->
+							  <slot
+								  v-for="item of list"
+								  :item="item"
+								  name="todo1"
+							  ></slot>
+                <slot
+                   v-for="item of list"
+                   :item="item"
+                    name="todo2"
+                 ></slot>
+							</ul>
+						</div>`
+    })
+    vm = new Vue ({
+        el: "#app"
+    })
+</script>
+</body>
+</html>

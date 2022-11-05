@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Vue中的插槽(slot)</title>
+	<script src="./vue.js"></script>
+</head>
+<body>
+<div id="app">
+<!--	<child content="<p>muyan</p>"></child>-->
+	<child>
+		<!-- 定义传入的结构和数据 -->
+		<!-- 插槽内容，可以是template标签也可以是其它标签 -->
+		<p class="header" >Hello header</p>
+		<p class="content" >Hello content</p>
+		<p class="footer">Hello footer</p>
+	</child>
+</div>
+<script>
+    Vue.component('child', {
+        // props: ['content'],
+        // template: `<div>
+        // 				<p>Hello</p>
+        // 				<div v-html="this.content"></div>
+        // 			</div>`
+        template: `<div>
+			<!-- 待插入位置添加<slot></slot>,并可配置默认值 -->
+			<!-- 一次性接受所有的html结构和数据 -->
+						<slot>插槽未被调用时会显示此内容</slot>
+					</div>`
+    })
+    vm = new Vue ({
+        el: "#app"
+    })
+</script>
+</body>
+</html>

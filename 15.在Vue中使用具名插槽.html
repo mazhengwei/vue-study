@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Vue中的插槽(slot)</title>
+	<script src="./vue.js"></script>
+</head>
+<body>
+<div id="app">
+	<child>
+		<!-- 父组件定义插槽 slot="xxx",引号中内容对应子组件插槽名称位置 -->
+		<!-- 插槽内容，slot可以是template标签也可以是其它标签 -->
+		<p class="header" slot="header">hello header</p>
+		<p class="footer" slot="footer">hello footer</p>
+		<!-- 2.6.0 版本之后slot被移除，新写法v-slot:xxx 或#xxx -->
+		<!-- 父组件内，多个具名插槽时，v-slot只能添加在template标签上 -->
+		<template v-slot:new>
+			<p class="header">hello new version</p>
+		</template>
+	</child>
+	<child #new>
+		<p>hello new version1</p>
+	</child>
+</div>
+<script>
+    Vue.component('child', {
+        template: `<div>
+						<!--	有多个插入位置，每个位置有自己的名称	-->
+							<slot name="header">插槽未被调用时会显示此内容</slot>
+							<div class="'content">hello content</div>
+							<slot name="footer">插槽未被调用时会显示此内容</slot>
+							<slot name="new">插槽未被调用时会显示此内容</slot>
+						</div>`
+    })
+    vm = new Vue ({
+        el: "#app"
+    })
+</script>
+</body>
+</html>
