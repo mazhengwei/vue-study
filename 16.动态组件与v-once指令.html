@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>动态组件与v-once指令</title>
+	<script src="./vue.js"></script>
+</head>
+<body>
+	<div id="app">
+<!--	动态组件：根据is里面数据的变化加载不同的组件-->
+		<component :is="type"></component>
+		<child-one v-if="type === 'child-one'"></child-one>
+		<child-two v-if="type === 'child-two'"></child-two>
+		<button @click="handleBtnClick">change</button>
+	</div>
+	<script>
+        // 当组件第一次被渲染时，因为存在v-once指令，会直接存到内存里
+        // 当再次被引用时，直接从内存拿，一定程度上提高静态内容的展示效率
+		Vue.component("child-one", {
+            template: '<div v-once>child-one</div>'
+		})
+        // 当组件第一次被渲染时，因为存在v-once指令，会直接存到内存里
+        // 当再次被引用时，直接从内存拿，一定程度上提高静态内容的展示效率
+		Vue.component("child-two", {
+            template: '<div v-once>child-two</div>'
+		})
+		vm = new Vue ({
+			el: "#app",
+			data: {
+                type: 'child-one'
+			},
+			methods: {
+                handleBtnClick: function () {
+                    this.type = this.type === 'child-one' ? 'child-two':'child-one'
+				}
+			}
+		})
+	</script>
+</body>
+</html>
