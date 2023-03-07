@@ -1,33 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>给组件绑定事件</title>
-  <script src="./vue.js"></script>
+    <script src="./vue.js"></script>
 </head>
+
 <body>
-<div id="app">
-<!--  <child @click="handleClick"></child>-->
-    <child @click.native="handleClick"></child>
-</div>
-<script>
-    Vue.component('child', {
-        template: '<div>Child</div>'
-        // template: '<div @click="handleChildClick">Child</div>',
-        // methods: {
-        //     handleChildClick: function () {
-        //         this.$emit('click')
-        //     }
-        // }
-    })
-    vm = new Vue({
-        el: "#app",
-        methods: {
-            handleClick: function () {
-                alert('click')
+    <div id="app">
+        <!--  <child @click="handleClick"></child>-->
+        <child @click.native="handleClick"></child>
+    </div>
+    <script>
+        Vue.component('child', {
+            template: '<div>Child</div>'
+            // template: '<div @click="handleChildClick">Child</div>',
+            // methods: {
+            //     handleChildClick: function () {
+            //         this.$emit('click')
+            //     }
+            // }
+        })
+        vm = new Vue({
+            el: "#app",
+            methods: {
+                handleClick: function () {
+                    alert('click')
+                }
             }
-        }
-    })
-</script>
+        })
+    </script>
 </body>
+
 </html>

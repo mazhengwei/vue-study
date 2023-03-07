@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<title>组件使用中的细节点</title>
 	<script src="./vue.js"></script>
 </head>
+
 <body>
 	<div id="app">
 		<counter ref="one" @change="handleChange"></counter>
@@ -26,7 +28,7 @@
 		</table>
 	</div>
 	<script>
-		Vue.component('counter',{
+		Vue.component('counter', {
 			template: '<div @click="handleClickCount">{{number}}</div>',
 			// 细节点二
 			// 子组件中data必须为函数，同时要求返回一个对象
@@ -39,21 +41,21 @@
 			methods: {
 				handleClickCount: function () {
 					this.number++
-					this.$emit('change',this.number)
+					this.$emit('change', this.number)
 				}
 			}
 		})
 		Vue.component(
-			'row',{
+			'row', {
 			// 子组件中data必须为函数，同时要求返回一个对象
 			// 作用：避免在多地多次调用子组件的时候，产生数据冲突(原因：数据存储地址一致)，这样做每个子组件都拥有独立的数据存储
-				data: function () {
-					return {
-						content: 'this is a row'
-					}
-				},
-				template: '<tr><td>{{content}}</td></tr>'
-			})
+			data: function () {
+				return {
+					content: 'this is a row'
+				}
+			},
+			template: '<tr><td>{{content}}</td></tr>'
+		})
 		vm = new Vue({
 			el: '#app',
 			data: {
@@ -76,4 +78,5 @@
 		})
 	</script>
 </body>
+
 </html>
