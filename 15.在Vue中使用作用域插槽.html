@@ -10,7 +10,7 @@
 	<child>
 		<!-- 父组件内，多个插槽必须要写template标签上 -->
 		<!-- props 指接收子组件传递的数据item，props为自定义名称-->
-		<!-- 绑定插槽的语法是 v-slot:todo1="props" 或 #todo1="props" -->
+		<!-- 绑定插槽的语法是 v-slot:todo1="props" 或 #todo1="props", v-slot 只能用在template标签上-->
 		<template #todo1="props">
 			<li>{{props.item}}</li>
 		</template>
@@ -31,20 +31,20 @@
             }
         },
         template: `<div>
-							<ul>
-							  <!-- 插槽位置 -->
-							  <slot
-								  v-for="item of list"
-								  :item="item"
-								  name="todo1"
-							  ></slot>
-                <slot
-                   v-for="item of list"
-                   :item="item"
-                    name="todo2"
-                 ></slot>
-							</ul>
-						</div>`
+						<ul>
+						  <!-- 插槽位置 -->
+						    <slot
+								v-for="item of list"
+								:item="item"
+								name="todo1"
+							></slot>
+							<slot
+							   v-for="item of list"
+							   :item="item"
+								name="todo2"
+							 ></slot>
+						</ul>
+		            </div>`
     })
     vm = new Vue ({
         el: "#app"

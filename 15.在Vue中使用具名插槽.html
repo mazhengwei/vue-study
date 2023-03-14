@@ -8,7 +8,7 @@
 <body>
 <div id="app">
 	<child>
-		<!-- 父组件定义插槽 slot="xxx",引号中内容对应子组件插槽名称位置 -->
+		<!-- 父组件定义插槽 slot="xxx",引号中内容对应子组件插槽名称位置, 所以与父组件引用插槽的位置无关 -->
 		<!-- 插槽内容，slot可以是template标签也可以是其它标签 -->
 		<p class="header" slot="header">hello header</p>
 		<p class="footer" slot="footer">hello footer</p>
@@ -25,12 +25,12 @@
 <script>
     Vue.component('child', {
         template: `<div>
-						<!--	有多个插入位置，每个位置有自己的名称	-->
-							<slot name="header">插槽未被调用时会显示此内容</slot>
-							<div class="'content">hello content</div>
-							<slot name="footer">插槽未被调用时会显示此内容</slot>
-							<slot name="new">插槽未被调用时会显示此内容</slot>
-						</div>`
+					<!--	有多个插入位置，每个位置有自己的名称	-->
+						<slot name="header">插槽 header 未被调用</slot>
+						<div class="'content">插槽 content 未被调用</div>
+						<slot name="footer">插槽 footer 未被调用</slot>
+						<slot name="new">插槽 new 未被调用</slot>
+					</div>`
     })
     vm = new Vue ({
         el: "#app"
